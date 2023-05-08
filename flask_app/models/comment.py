@@ -3,7 +3,7 @@ from flask_app.models import user
 from flask import flash
 import re
 
-COMMENT_REGEX = re.compile(r'\S+')
+COMMENT_REGEX = re.compile(r'^\s*$')
 
 class Comment:
     DB = 'coding_dojo_wall_schema'
@@ -56,9 +56,9 @@ class Comment:
         return all_comments
     
     @staticmethod
-    def validate_comment(post):
+    def validate_comment(comment):
         is_valid = True
-        if len(post['content']) == 0:
+        if len(comment['content']) == 0 or COMMENT_REGEX.match(comment['content']):
             flash('Comment cannot be empty!', 'comment_error')
             is_valid = False
 

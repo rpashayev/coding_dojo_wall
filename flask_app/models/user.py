@@ -3,7 +3,8 @@ from flask import flash
 import re
 
 
-EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$') 
+EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
+NAME_REGEX = re.compile(r'^\s*$')
 
 class User:
     DB = 'coding_dojo_wall_schema'
@@ -71,7 +72,7 @@ class User:
             flash('Email was already registered', 'reg_error')
             is_valid = False
         else:
-            if len(user['first_name']) == 0 or len(user['last_name']) == 0 or len(user['email']) == 0:
+            if len(user['first_name']) == 0 or len(user['last_name']) == 0 or len(user['email']) == 0 or NAME_REGEX.match(user['first_name']) or NAME_REGEX.match(user['last_name']):
                 flash('All fields are required!', 'reg_error')
                 is_valid = False
             if len(user['password']) < 8:

@@ -3,7 +3,7 @@ from flask_app.models import user, comment
 from flask import flash
 import re
 
-POST_REGEX = re.compile(r'\S+')
+POST_REGEX = re.compile(r'^\s*$')
 
 class Post:
     DB = 'coding_dojo_wall_schema'
@@ -90,7 +90,7 @@ class Post:
     @staticmethod
     def validate_post(post):
         is_valid = True
-        if len(post['content']) == 0:
+        if len(post['content']) == 0 or POST_REGEX.match(post['content']):
             flash('Post cannot be empty!', 'post_error')
             is_valid = False
 

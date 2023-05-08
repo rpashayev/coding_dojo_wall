@@ -64,6 +64,13 @@
                     {% if session['id'] %}
                         <form action="/posts/comments/create" method="post">
                             <label class="form-label text-primary" for="comment"><em>post a comment:</em></label>
+                            {% with messages = get_flashed_messages(category_filter=['comment_error']) %}
+                                {% if messages %}
+                                    {% for message in messages %} 
+                                        <p class="text-danger">{{ message }}</p>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %} 
                             <input type="text" class="form-control" name="content" id="comment" placeholder="Your comment here">
                             <input type="hidden"name="post_id" value="{{ post.id }}"> 
                             <button type="submit" class="btn btn-primary mt-1">Comment</button>
