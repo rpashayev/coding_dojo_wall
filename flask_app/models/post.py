@@ -95,3 +95,4 @@ class Post:
             is_valid = False
 
         return is_valid
+    
